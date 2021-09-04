@@ -1,0 +1,153 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 自适应 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="{% static 'lib/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+  	<link href="{% static 'css/bootstrap-combined.min.css' %}" rel="stylesheet">
+  	<link href="{% static 'css/layoutit.css' %}" rel="stylesheet">
+    <!-- 自己的样式 -->
+    <!--<link rel="stylesheet" href="{% static 'css/index.css' %}">-->
+    <!-- 站点图标 -->
+
+
+  </head>
+  <body style="margin: 0 auto">
+  <!--<img alt="300x200" src='{% static "imgs/1_0114709.jpg" %}' />-->
+
+  <div class="container-fluid" style="float: none;">
+	<div class="row-fluid img-rounded" style="background-color: #0e0e0e;padding-top: 25px;padding-left: 25px" >
+		<div class="span3" >
+			<p>
+				<em style="color: #3c3c3c">moviegeek</em>
+			</p>
+		</div>
+		<div class="span6">
+			<div class="row-fluid">
+                {% if username == '' %}
+				<a href="../login/" style="color: #3c3c3c">登陆</a>
+				{% else %}
+                <a href="../myspace/" style="color: #3c3c3c">{{ username }}</a>
+                <a href="../logout/" style="color: #3c3c3c">退出</a>
+                {% endif %}
+
+
+            </div>
+		</div>
+		<div class="span3">
+			<form class="form-search" method="get" action="../movie/">
+				<input class="input-medium search-query" type="text" name="search" /> <button type="submit" class="btn">查找</button>
+			</form>
+		</div>
+	</div>
+	<div class="row-fluid" style="margin-top: 20px">
+		<div class="span2 img-rounded" style="background-color: #3c3c3c">
+			<ul class="nav nav-list">
+				<li class="nav-header">
+					列表标题
+				</li>
+                <li>
+                    <a href="../list/1">首页</a>
+                </li>
+                {% for genres in genre %}
+				<li >
+					<a href="../{{ genres }}/1">{{ genres }}</a>
+				</li>
+                {% endfor %}
+
+			</ul>
+		</div>
+		<div class="span8 img-rounded">
+
+            {% for movies in movies_list1 %}
+			<div class="row-fluid">
+				<div class="span12">
+					<ul class="thumbnails">
+                        {% for movie in movies %}
+                            <li class="span3">
+                                <div class="thumbnail">
+                                    <a href="../detail/{{ movie.title }}">
+                                        <img alt="300x200" src={{   movie.url.url }} />
+                                    </a>
+                                    <div class="caption">
+                                        <P>
+                                            {{ movie.title }}
+                                        </P>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+					</ul>
+				</div>
+			</div>
+            {% endfor %}
+		</div>
+		<div class="span2 img-rounded" style="background-color: #3c3c3c">
+			<ul class="nav nav-list">
+				<li class="nav-header">
+					评分最高
+				</li>
+                {% for movie in top_movies %}
+				<li>
+					<a href="../detail/{{ movie.title }}">{{ movie.title }}</a>
+				</li>
+                {% endfor %}
+
+			</ul>
+		</div>
+	</div>
+	<div class="row-fluid" >
+		<div class="span12" style="text-align: center" >
+			<div class="pagination pagination-centered">
+				<ul>
+                    {% if page.has_previous %}
+					<li>
+						<a href="{{ page.previous_page_number }}">上一页</a>
+					</li>
+                    {% else %}
+                    <li>
+						<a href="">上一页</a>
+					</li>
+                    {% endif %}
+
+                    {% for num in page_range %}
+                        {% if pindex == page.number %}
+                            <li><a href="">{{ num }}</a> </li>
+                        {% else %}
+                            <li>
+                                <a href="{{ num }}">{{ num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if page.has_next %}
+					<li>
+						<a href="{{ page.next_page_number }}">下一页</a>
+					</li>
+                    {% else %}
+                    <li>
+						<a href="">上一页</a>
+					</li>
+                    {% endif %}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="{% static 'lib/jquery/jquery-3.4.1.min.js' %}"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="{% static 'lib/bootstrap/js/bootstrap.js' %}"></script>
+    <!-- 自己的脚本文件 -->
+    <script src="{% static 'js/index.js'%}"></script>
+  </body>
+</html>

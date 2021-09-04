@@ -1,0 +1,95 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <meta charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 自适应 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="{% static 'lib/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+  	<link href="{% static 'css/bootstrap-combined.min.css' %}" rel="stylesheet">
+  	<link href="{% static 'css/layoutit.css' %}" rel="stylesheet">
+    <title>Title</title>
+</head>
+<body style="margin: 0 auto">
+<div class="container">
+	<div class="row">
+		<div class="span12">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>
+							编号
+						</th>
+						<th>
+							标题
+						</th>
+						<th>
+							imdb号
+						</th>
+						<th>
+							地区
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+                    {% for movie in movies %}
+					<tr class="success">
+						<td>
+							{{ movie.id }}
+						</td>
+						<td>
+							{{movie.title}}
+						</td>
+						<td>
+							{{movie.imbd}}
+						</td>
+						<td>
+							{{ movie.ares }}
+						</td>
+					</tr>
+                    {% endfor %}
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+    {% for movies in movies_list1 %}
+        <div class="row-fluid">
+            <div class="span12">
+                <ul class="thumbnails">
+                    {% for movie in movies %}
+                        <li class="span3">
+                            <div class="thumbnail">
+                                <a href="../detail/{{ movie.title }}">
+                                    <img alt="300x200" src={{  movie.url.url }} />
+                                </a>
+                                <div class="caption">
+                                    <P>
+                                        {{ movie.title }}
+                                    </P>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
+</body>
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="{% static 'lib/jquery/jquery-3.4.1.min.js' %}"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="{% static 'lib/bootstrap/js/bootstrap.js' %}"></script>
+    <!-- 自己的脚本文件 -->
+    <script src="{% static 'js/index.js'%}"></script>
+</html>
